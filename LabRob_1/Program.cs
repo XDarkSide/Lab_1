@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace LabRob_1
 {
@@ -16,14 +16,16 @@ namespace LabRob_1
             Arithmetic_Mean(numbers);
             Geometric_Mean(numbers);
 
-            Factorial_For(number);
-            Factorial_While(number);
-            Factorial_Do_While(number);
+            Factorial(number);
 
-            Summ_Odd_Numbers(numbers);
-            Summ_Odd_Numbers(1, 3, numbers);
-            Summ_Even_Numbers(numbers);
-            Summ_Even_Numbers(1, 3, numbers);
+            Summ_Odd_Numbers(5, 10);
+            Summ_Odd_Numbers(number);
+           
+            Summ_Even_Numbers_For(5, 10);
+            Summ_Even_Numbers_For(number);
+            Summ_Even_Numbers_While(number);
+            Summ_Even_Numbers_DoWhile(number);
+           
 
             Console.ReadKey();
         }
@@ -38,6 +40,7 @@ namespace LabRob_1
             {
                 string input = Console.ReadLine();
                 correctly = int.TryParse(input, out number);
+                if (number == 0) correctly = false;
 
                 if (!correctly)
                 {
@@ -72,7 +75,7 @@ namespace LabRob_1
             return counter;
         }
 
-        static int[] Create_Number_Array(int number, int counter) // створення масиву, на основі числа number (2)
+        static int[] Create_Number_Array(int number, int counter) // створення масиву на основі числа number (2)
         {
             int[] number_array = new int[counter];
 
@@ -121,13 +124,13 @@ namespace LabRob_1
             return answer;
         }
 
-        static ulong Factorial_For(int number) // факторіал числа number через for() (5)
+        static ulong Factorial(int number) // факторіал числа number (5)
         {
             ulong answer = 1;
 
             if (number > 65)
             {
-                Console.WriteLine("Значення аргументу не може бути більшим за 65. Виконання методу Factorial_For() припинено. ");
+                Console.WriteLine("Значення аргументу не може бути більшим за 65. Виконання методу Factorial() припинено.\n");
                 return 0;
             }
             for (uint i = 1; i <= number; i++)
@@ -138,139 +141,104 @@ namespace LabRob_1
                 }
             }
 
-            Console.WriteLine($"Факторіал числа {Program.number} = {answer}. Використано метод Factorial_For(). ");
+            Console.WriteLine($"Факторіал числа {Program.number} = {answer}.\n ");
 
             return answer;
         }
 
-        static ulong Factorial_While(int number) // факторіал числа number через while() (5)
+        static int Summ_Odd_Numbers(int number) //  сума непарних чисел від 1 до number (7)
         {
-            ulong answer = 1;
+            int answer = 0;
 
-            if (number > 65)
+            for (int i = 1; i <= number; i++)
             {
-                Console.WriteLine("Значення аргументу не може бути більшим за 65. Виконання методу Factorial_While() припинено. ");
-                return 0;
-            }
-
-            while (number != 0)
-            {
-                unchecked
+                if (i % 2 != 0)
                 {
-                    answer *= (ulong)number--;
+                    answer += i;
                 }
             }
-            Console.WriteLine($"Факторіал числа {Program.number} = {answer}. Використано метод Factorial_While(). ");
 
+            Console.WriteLine($"Сума непарних чисел від 1 до {number}: {answer}.\n");
             return answer;
         }
 
-        static ulong Factorial_Do_While(int number) // факторіал числа number через do{} while() (5)
+        static int Summ_Even_Numbers_For(int number) //  сума парних чисел від 1 до number (for) (6)
         {
-            ulong answer = 1;
+            int answer = 0;
 
-            if (number > 65)
+            for (int i = 1; i <= number; i++)
             {
-                Console.WriteLine("Значення аргументу не може бути більшим за 65. Виконання методу Factorial_DoWhile() припинено.\n ");
-                return 0;
+                if (i % 2 == 0)
+                {
+                    answer += i;
+                }
             }
+
+            Console.WriteLine($"Сума парних чисел від 1 до {number}: {answer}. Використано цикл for().");
+            return answer;
+        }
+
+        static int Summ_Even_Numbers_While(int number) //  сума парних чисел від 1 до number (while) (6)
+        {
+            int answer = 0;
+            int i = number;
+
+            while (i != 0)
+            {
+                if (i % 2 == 0) answer += i;
+                i--;
+            }
+
+            Console.WriteLine($"Сума парних чисел від 1 до {number}: {answer}. Використано цикл while().");
+            return answer;
+        }
+
+        static int Summ_Even_Numbers_DoWhile(int number) //  сума парних чисел від 1 до N (do-while) (6)
+        {
+            int answer = 0;
+            int i = number;
 
             do
             {
-                unchecked
-                {
-                    answer *= (ulong)number--;
-                }
+                if (i % 2 == 0) answer += i;
+                i--;
             }
-            while (number != 0);
+            while (i != 0);
 
-            Console.WriteLine($"Факторіал числа {Program.number} = {answer}. Використано метод Factorial_DoWhile(). \n");
-
+            Console.WriteLine($"Сума парних чисел від 1 до {number}: {answer}. Використано цикл do-while().");
             return answer;
         }
 
-        static int Summ_Odd_Numbers(int[] nums) //  сума непарних елементів ВСЬОГО масиву (7)
+        static int Summ_Odd_Numbers(int start, int finish) // сума непарних чисел, обмеженого діапазоном (8)
         {
             int answer = 0;
 
-            for (uint i = 0; i < nums.Length; i++)
+            for (int i = start; i <= finish; i++)
             {
-                if (nums[i] % 2 != 0)
+                if (i % 2 != 0)
                 {
-                    answer += nums[i];
+                    answer += i;
                 }
             }
 
-            Console.WriteLine($"Сума непарних цифр масиву: {answer}.");
+            Console.WriteLine($"Сума непарних чисел від {start} до {finish}: {answer}.");
             return answer;
         }
 
-        static int Summ_Even_Numbers(int[] nums) // сума парних елементів ВСЬОГО масиву (6)
+        static int Summ_Even_Numbers_For(int start, int finish) // сума парних чисел, обмеженого діапазоном (8)
         {
             int answer = 0;
 
-            for (uint i = 0; i < nums.Length; i++)
+            for (int i = start; i <= finish; i++)
             {
-                if (nums[i] % 2 == 0)
+                if (i % 2 == 0)
                 {
-                    answer += nums[i];
+                    answer += i;
                 }
             }
 
-            Console.WriteLine($"Сума парних цифр масиву: {answer}.");
+            Console.WriteLine($"Сума парних чисел від {start} до {finish}: {answer}.");
             return answer;
-        }
-
-        static int Summ_Odd_Numbers(Index start, Index finish, int[] nums) //  сума непарних елементів масиву, обмеженого діапазоном (8)
-        {
-            if (start.Value >= 0 && finish.Value < nums.Length)
-            {
-                int answer = 0;
-
-                for (uint i = 0; i < nums.Length; i++)
-                {
-                    if (i < start.Value || i >= finish.Value) continue;
-
-                    if (nums[i] % 2 != 0)
-                    {
-                        answer += nums[i];
-                    }
-                }
-
-                Console.WriteLine($"Сума непарних цифр масиву (з діапазону [{start}..{finish}]): {answer}.\n");
-                return answer;
-            }
-            else
-            {
-                Console.WriteLine("Методу передані некоректне значення діапазону. Виконання методу припинено.");
-                return 0;
-            }
-        }
-
-        static int Summ_Even_Numbers(Index start, Index finish, int[] nums) //  сума парних елементів масиву, обмеженого діапазоном (8)
-        {
-            if (start.Value >= 0 && finish.Value < nums.Length)
-            {
-                int answer = 0;
-
-                for (uint i = 0; i < nums.Length; i++)
-                {
-                    if (i < start.Value || i >= finish.Value) continue;
-
-                    if (nums[i] % 2 == 0)
-                    {
-                        answer += nums[i];
-                    }
-                }
-
-                Console.WriteLine($"Сума парних цифр масиву (з діапазону [{start}..{finish}]): {answer}.");
-                return answer;
-            }
-            else
-            {
-                Console.WriteLine("Методу передані некоректне значення діапазону. Виконання методу припинено.");
-                return 0;
-            }
         }
     }
 }
